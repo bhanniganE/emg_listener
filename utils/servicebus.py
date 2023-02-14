@@ -23,4 +23,4 @@ def servicebus_queue_receiver():
         return queue_receiver
     except ValueError:
         print("error: unable to connect to servicebus. please confirm credentials.")
-        sys.exit(1)
+        sys.exit(1) 
