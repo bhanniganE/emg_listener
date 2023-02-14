@@ -2,20 +2,29 @@
     emg_listener
 """
 
+# see https://developer.equinix.com/docs/emg/overview 
+
 import signal
 import sys
 import asyncio
+
 from dotenv import load_dotenv
 from os.path import exists
 
 from utils.messages import receive_messages, dispatchResource, dispatchBilling
-#import utils.messages
     
-    
+'''
+   interrupt handlers
+'''
+   
 def sigint_handler(sig, frame):
     print('exiting..')
     sys.exit(0)
-        
+
+
+'''
+   main loop
+'''   
     
 async def main():
     if not exists(".env"):
@@ -32,16 +41,21 @@ async def main():
     
     while (True):
         for msg in await receive_messages():
-            # call the event handler based on the resource type
-            dispatchResource(msg)
-                
-            # if billing details are present, call the billing handler for that resource type  
+            # if billing details are present, call the billing dispatcher  
             try:
                 if "LineDetails" in msg["Body"].keys():
                     dispatchBilling(msg)
             except KeyError:
-                pass
-
+                print('billing fail..')
+                continue
+                #pass
+                
+            # call the event handler based on the resource type
+            try:
+                dispatchResource(msg)
+            except:
+                print("dispatchResource()")
+                
 
 if __name__ == "__main__":
     signal.signal( signal.SIGINT, sigint_handler )
