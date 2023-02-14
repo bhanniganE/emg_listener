@@ -2,7 +2,9 @@
       - EMG message utilities
 '''
 
-# review the JSON structure in the 'network notifications' section of this page
+# the JSON structure of the messages returned by the service bus can be found here, organized by type
+#    https://developer.equinix.com/docs/emg/getting-started
+
 #   https://developer.equinix.com/docs/emg/overview
 
 import asyncio
@@ -11,7 +13,9 @@ import sys
 
 from utils.servicebus import servicebus_queue_receiver
 
-# msg resource handlers
+'''
+   message handlers by resource type
+'''
 
 def BreakFix (msg):
     #print("> BreakFix")
@@ -67,10 +71,14 @@ def DataCenter_SecurityIncident (msg):
     #print("> DataCenter Security Incident")
     pass
 
-# dispatch table for task resource types
-#   see https://developer.equinix.com/docs/emg/getting-started
+
+'''
+   dispatch table of resource types to message handlers
+'''
 
 resource_handlers = { 
+#   resource value                            message handlers
+#   --------------------------------------    -------------------------------------
     'BreakFix'                              : BreakFix,
     'Shipping'                              : Shipping,
     'WorkVisit'                             : WorkVisit,
@@ -86,13 +94,18 @@ resource_handlers = {
 
 def dispatchResource (msg):
     try:
-        (resource_handlers[msg["Resource"]])( msg )
+        (resource_handlers[msg['Resource']])( msg )
         
     except KeyError:
         print("warning: unhandled Resource type encountered, dumping JSON.")
-        print(str(msg))       
+        print(str(msg))
+        pass
         
-        
+
+''' 
+   billing handlers 
+'''        
+
 def Billing_CrossConnect (msg):
     #print("> Billing (CrossConnect)")
     pass
@@ -118,31 +131,46 @@ def Billing_Shipping (msg):
     pass
 
 def Billing_NetworkProduct (msg):
-    print("> Billing (NetworkProduct)")
+    #print("> Billing (NetworkProduct)")
     print(str(msg))
     pass
 
-# dispatch table for billing message types
+def Billing_WorkVisit (msg):
+    #print("> Billing (WorkVisit)")
+    pass
+
+'''
+   dispatch table of resource types to billing handlers
+   note: billing messages are defined by the existence of LineItems in the Body
+'''
 
 billing_handlers = {
+#   resource value      billing handlers
+#   -----------------   ----------------------
     'CrossConnect'    : Billing_CrossConnect,
     'Accessory'       : Billing_Accessory,
     'ColoOrder'       : Billing_ColoOrder,
     'SmartHands'      : Billing_SmartHands,
     'BreakFix'        : Billing_BreakFix,
     'Shipping'        : Billing_Shipping,
-    'NetworkProduct'  : Billing_NetworkProduct
+    'NetworkProduct'  : Billing_NetworkProduct,
+    'WorkVisit'       : Billing_WorkVisit
     }    
 
 def dispatchBilling (msg):
     try:
-        billing_handlers[msg["Resource"]](msg)                # known Billing types
+        print('in dispatchBilling('+msg['Resource']+')')
+        (billing_handlers[msg['Resource']])( msg )                # known Billing types
         
     except KeyError:
         print("warning: unhandled Billing type encountered, dumping JSON.")
         print(str(msg))       
 
  
+'''
+   service bus receiver loop
+'''
+   
 async def receive_messages ():
     messages = []
     receiver = servicebus_queue_receiver()
@@ -157,7 +185,8 @@ async def receive_messages ():
             # filter messages here
             messages.append(msg)
 
-            # end of for loop
-                
+        # end of for loop    
+        #print(receiver.status)    
         receiver.close()
+        
         return messages  
