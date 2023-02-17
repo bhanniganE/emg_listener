@@ -71,6 +71,14 @@ def DataCenter_SecurityIncident (msg):
     #print("> DataCenter Security Incident")
     pass
 
+def Network_Maintenance (msg):
+    #print("> Network Maintenance")
+    pass
+    
+def Network_Incident (msg):
+    #print("> Network Incident")
+    pass
+
 
 '''
    dispatch table of resource types to message handlers
@@ -89,7 +97,9 @@ resource_handlers = {
     'DataCenter.Maintenance'                : DataCenter_Maintenance,
     'DataCenter.Advisory'                   : DataCenter_Advisory,
     'DataCenter.Incident'                   : DataCenter_Incident, 
-    'DataCenter.SecurityIncident'           : DataCenter_SecurityIncident
+    'DataCenter.SecurityIncident'           : DataCenter_SecurityIncident,
+    'Network.Maintenance'                   : Network_Maintenance,
+    'Network.Incident'                      : Network_Incident
     }
 
 def dispatchResource (msg):
@@ -130,9 +140,12 @@ def Billing_Shipping (msg):
     #print("> Billing (Shipping)")
     pass
 
+def Billing_IbxSmartView (msg):
+    #print("> Billing (IBX SmartView)")
+    pass
+
 def Billing_NetworkProduct (msg):
     #print("> Billing (NetworkProduct)")
-    print(str(msg))
     pass
 
 def Billing_WorkVisit (msg):
@@ -153,16 +166,18 @@ billing_handlers = {
     'SmartHands'      : Billing_SmartHands,
     'BreakFix'        : Billing_BreakFix,
     'Shipping'        : Billing_Shipping,
+    'IbxSmartView'    : Billing_IbxSmartView,
     'NetworkProduct'  : Billing_NetworkProduct,
     'WorkVisit'       : Billing_WorkVisit
     }    
 
 def dispatchBilling (msg):
     try:
-        print('in dispatchBilling('+msg['Resource']+')')
-        (billing_handlers[msg['Resource']])( msg )                # known Billing types
+        billing_handlers[msg['Resource']]( msg )                # known Billing types
         
-    except KeyError:
+    #except KeyError:
+    except:
+        print('in dispatchBilling('+msg['Resource']+')')
         print("warning: unhandled Billing type encountered, dumping JSON.")
         print(str(msg))       
 
@@ -189,4 +204,4 @@ async def receive_messages ():
         #print(receiver.status)    
         receiver.close()
         
-        return messages  
+        return messages
