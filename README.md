@@ -7,6 +7,6 @@ visit https://developer.equinix.com
 
 when the subscription is ready, click on it and the 'copy YAML' button
 
-update the .env file with values from your subscription
+copy the .env.template file to .env, then update it with the values from your subscription
 
 update your python libraries to include the packages listed in the requirements.txt file 
