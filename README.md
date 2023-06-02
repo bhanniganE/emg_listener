@@ -9,4 +9,8 @@ when the subscription is ready, click on it and the 'copy YAML' button
 
 copy the .env.template file to .env, then update it with the values from your subscription
 
-update your python libraries to include the packages listed in the requirements.txt file 
+review the requirements.txt file, listed are the needed python libraries and deployment instructions 
+
+run command:
+
+	python3 emg_listener.py
