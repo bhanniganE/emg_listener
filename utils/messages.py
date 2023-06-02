@@ -18,15 +18,15 @@ from utils.servicebus import servicebus_queue_receiver
 '''
 
 def BreakFix (msg):
-    #print("> BreakFix")
+    # print("> BreakFix")
     pass
     
 def Shipping (msg):
-    #print("> Shipping")
+    # print("> Shipping")
     pass
     
 def WorkVisit (msg):
-    #print("> WorkVisit")
+    # print("> WorkVisit")
     pass
     
 def SmartHands (msg):
@@ -56,27 +56,27 @@ def DataCenter_Network_Port (msg):
     #pass
 
 def DataCenter_Maintenance (msg):
-    #print("> DataCenter Maintenance")
+    #. print("> DataCenter Maintenance")
     pass
     
 def DataCenter_Advisory (msg):
-    #print("> DataCenter Advisory")
+    # print("> DataCenter Advisory")
     pass
 
 def DataCenter_Incident (msg):
-    #print("> DataCenter Incident")
+    # print("> DataCenter Incident")
     pass
 
 def DataCenter_SecurityIncident (msg):
-    #print("> DataCenter Security Incident")
+    # print("> DataCenter Security Incident")
     pass
 
 def Network_Maintenance (msg):
-    #print("> Network Maintenance")
+    # print("> Network Maintenance")
     pass
     
 def Network_Incident (msg):
-    #print("> Network Incident")
+    # print("> Network Incident")
     pass
 
 
@@ -117,39 +117,39 @@ def dispatchResource (msg):
 '''        
 
 def Billing_CrossConnect (msg):
-    #print("> Billing (CrossConnect)")
+    # print("> Billing (CrossConnect)")
     pass
     
 def Billing_Accessory (msg):
-    #print("> Billing (Accessory)")
+    # print("> Billing (Accessory)")
     pass
     
 def Billing_ColoOrder (msg):
-    #print("> Billing (ColoOrder)")
+    # print("> Billing (ColoOrder)")
     pass
     
 def Billing_SmartHands (msg):
-    #print("> Billing (SmartHands)")
+    # print("> Billing (SmartHands)")
     pass
     
 def Billing_BreakFix (msg):
-    #print("> Billing (BreakFix)")
+    # print("> Billing (BreakFix)")
     pass
     
 def Billing_Shipping (msg):
-    #print("> Billing (Shipping)")
+    # print("> Billing (Shipping)")
     pass
 
 def Billing_IbxSmartView (msg):
-    #print("> Billing (IBX SmartView)")
+    # print("> Billing (IBX SmartView)")
     pass
 
 def Billing_NetworkProduct (msg):
-    #print("> Billing (NetworkProduct)")
+    # print("> Billing (NetworkProduct)")
     pass
 
 def Billing_WorkVisit (msg):
-    #print("> Billing (WorkVisit)")
+    # print("> Billing (WorkVisit)")
     pass
 
 '''
