@@ -1,3 +1,8 @@
+# required python libraries
+#
+# install command: 
+#   python3 -m pip install -r requirements.txt
+#
 azure-servicebus==7.8.0
 python-dotenv==0.20.0
 requests==2.27.1
